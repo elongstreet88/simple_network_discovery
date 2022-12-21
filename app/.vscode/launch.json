@@ -1,0 +1,64 @@
+{
+  "version": "0.2.0",
+  "inputs": [
+    /**{
+      "id": "EXAMPLE",
+      "type": "command",
+      "command": "shellCommand.execute",
+      "args": {
+        "command": "az keyvault secret show --name test --vault-name test --query value -o tsv",
+        "useFirstResult": true
+      },
+    }**/
+  ],
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Debug From Docker",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-run: debug",
+      "python": {
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app"
+          }
+        ],
+        "projectType": "flask"
+      },
+      "dockerServerReadyAction": {
+        "action": "openExternally",
+        "pattern": "Running on (http?://\\S+|[0-9]+)",
+        "uriFormat": "%s://localhost:%s/"
+      }
+    },
+    {
+      "name": "Debug from Local",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "app:app",
+        "--reload",
+        "--log-level",
+        "debug",
+        "--port",
+        "8000"
+      ],
+      "justMyCode": false,
+      "env": {
+        //"TEST": "${input:EXAMPLE}",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    }
+  ]
+}

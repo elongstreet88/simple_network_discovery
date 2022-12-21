@@ -1,0 +1,6 @@
+**/config.yml
+**/venv**
+**/.pytest_cache**
+**/.vscode
+**/__pycache__**
+**/.gitignore
