@@ -1,5 +1,9 @@
 FROM python:3.11
 
+# Add app requirements
+RUN apt-get update
+RUN apt-get install net-tools -y
+
 # App python requirements
 WORKDIR /app
 COPY ./app/requirements.txt ./requirements.txt
