@@ -8,8 +8,7 @@ from fastapi_cache.decorator import cache
 # Router info
 router = APIRouter(
     prefix                  = "/location",
-    tags                    = ["Location"],
-    default_response_class  = FormatJSON
+    tags                    = ["Location"]
 )
 
 @router.get("", response_model=Location, status_code=status.HTTP_200_OK)

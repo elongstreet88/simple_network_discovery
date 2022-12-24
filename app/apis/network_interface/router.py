@@ -7,8 +7,7 @@ from fastapi_cache.decorator import cache
 # Router info
 router = APIRouter(
     prefix                  = "/network_interface",
-    tags                    = ["Network Interface"],
-    default_response_class  = FormatJSON
+    tags                    = ["Network Interface"]
 )
 
 @router.get("", response_model=list[NetworkInterface], status_code=status.HTTP_200_OK)
