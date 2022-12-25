@@ -5,7 +5,18 @@ Simple Network Discovery
 
 # Changelog
 
-## 0.3.0 (December 23, 2022)
+## 0.4.0 (December 24, 2022)
+
+FEATURES:
+* Added ping scan
+
+ENHANCEMENTS:
+
+BUG FIXES:
+
+---
+
+## 0.3.0 (December 24, 2022)
 
 FEATURES:
 * Working port scan

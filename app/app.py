@@ -5,6 +5,7 @@ from fastapi_cache.backends.inmemory import InMemoryBackend
 from apis.location.router import router as location_router
 from apis.network_interface.router import router as network_interface_router
 from apis.port_scan.router import router as port_scan_router
+from apis.ping_scan.router import router as ping_scan_router
 
 # Root vars
 root_path   = "/api"
@@ -23,6 +24,7 @@ app = FastAPI(
 app.include_router(location_router,             prefix=root_path)
 app.include_router(network_interface_router,    prefix=root_path)
 app.include_router(port_scan_router,            prefix=root_path)
+app.include_router(ping_scan_router,            prefix=root_path)
 
 @app.on_event("startup")
 async def startup():

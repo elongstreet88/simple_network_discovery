@@ -20,7 +20,7 @@ async def get_port_scan(response:Response, device_address: str, port: int, proto
     """
     module = PortScanModule()
     #module.test_udp_port(device_address, port)
-    success, results = await run_in_threadpool(module.check_port_open_on_host, device_address, port, protocol)
+    success, results = await run_in_threadpool(module.check_port_open_on_device, device_address, port, protocol)
 
     if not success:
         raise HTTPException(

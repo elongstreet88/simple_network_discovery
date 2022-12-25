@@ -16,7 +16,7 @@ class PortScanModule:
     def get_default_timeout(self):
         return self.scan_timeout_ms
 
-    def check_port_open_on_host(self, device_address:str, port:int, protocol:PortScanProtocol=PortScanProtocol.TCP)->bool|PortScan:
+    def check_port_open_on_device(self, device_address:str, port:int, protocol:PortScanProtocol=PortScanProtocol.TCP)->bool|PortScan:
         """
         Tests if a port is open on a device.
         """
