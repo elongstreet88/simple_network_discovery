@@ -5,6 +5,18 @@ Simple Network Discovery
 
 # Changelog
 
+## 0.5.0 (December 24, 2022)
+
+FEATURES:
+* Refactor `port_scan` to use fastapi depends settings
+
+ENHANCEMENTS:
+
+BUG FIXES:
+
+---
+
+
 ## 0.4.0 (December 24, 2022)
 
 FEATURES:

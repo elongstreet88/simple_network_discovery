@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Response
-from apis.port_scan.model import PortScan, PortScanProtocol
+from fastapi import APIRouter, Depends, HTTPException, status, Response
+from apis.port_scan.model import PortScan, PortScanProtocol, PortScanSettings
 from apis.port_scan.module import PortScanModule
 from tools.tools import FormatJSON
 from fastapi_cache.decorator import cache
@@ -11,16 +11,15 @@ router = APIRouter(
     tags                    = ["Port Scan"]
 )
 
-@router.get("/{protocol}/{device_address}/{port}", response_model=PortScan, status_code=status.HTTP_200_OK)
+@router.get("/{device_address}/{port}", response_model=PortScan, status_code=status.HTTP_200_OK)
 @cache(expire=1) # 1 Seconds
-async def get_port_scan(response:Response, device_address: str, port: int, protocol:PortScanProtocol):
+async def get_port_scan(response:Response, device_address: str, port: int, scan_settings:PortScanSettings=Depends()):
     """
     Checks if a port is open on a device.\n
     Cache: 1 Second
     """
     module = PortScanModule()
-    #module.test_udp_port(device_address, port)
-    success, results = await run_in_threadpool(module.check_port_open_on_device, device_address, port, protocol)
+    success, results = await run_in_threadpool(module.check_port_open_on_device, device_address, port, scan_settings)
 
     if not success:
         raise HTTPException(
