@@ -7,6 +7,13 @@ logger = get_logger(__name__)
 
 class LocationModule:
     def get_location(self)->bool|Location:
+        """
+        Gets location information based on current public IP.
+
+        Returns:
+            bool|Location: True if successful, False if failed|Location object with details
+        """
+        
         # Get public IP
         try:
             response = requests.get('https://api64.ipify.org?format=json').json()

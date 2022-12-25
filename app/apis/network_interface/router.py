@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException, status, Response
 from apis.network_interface.module import NetworkInterfaceModule
 from apis.network_interface.model import NetworkInterface
-from tools.tools import FormatJSON
 from fastapi_cache.decorator import cache
 
 # Router info

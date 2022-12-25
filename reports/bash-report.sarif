@@ -1,0 +1,78 @@
+{
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Shell Script Analysis",
+          "version": "1.0.0-scan",
+          "fullName": "Shell Script Analysis"
+        }
+      },
+      "conversion": {
+        "tool": {
+          "driver": {
+            "name": "@ShiftLeft/sast-scan"
+          }
+        },
+        "invocation": {
+          "arguments": [
+            "-a",
+            "--shell=bash",
+            "-f",
+            "json",
+            "-S",
+            "error",
+            "--color=never",
+            "/app/code_scan.sh"
+          ],
+          "executionSuccessful": true,
+          "commandLine": "-a --shell=bash -f json -S error --color=never /app/code_scan.sh",
+          "endTimeUtc": "2022-12-25T02:21:17Z",
+          "workingDirectory": {
+            "uri": "file:///Users/eric/personal/git/simple_network_discovery"
+          }
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2022-12-25T02:21:17Z",
+          "workingDirectory": {
+            "uri": "file:///Users/eric/personal/git/simple_network_discovery"
+          }
+        }
+      ],
+      "properties": {
+        "metrics": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "results": [],
+      "automationDetails": {
+        "description": {
+          "text": "Static Analysis Security Test results using @ShiftLeft/sast-scan"
+        },
+        "guid": "4c1c37c5-8a9b-49ff-919d-0001aec7421e"
+      },
+      "versionControlProvenance": [
+        {
+          "branch": "main",
+          "repositoryUri": "https://github.com/elongstreet88/simple_network_discovery",
+          "revisionId": "f88a47a2050e892463083e97cc942c364b5c3b9f"
+        }
+      ]
+    }
+  ],
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "inlineExternalProperties": [
+    {
+      "guid": "4c1c37c5-8a9b-49ff-919d-0001aec7421e",
+      "runGuid": "029f7674-d21a-4e95-80be-787c7fee8686"
+    }
+  ]
+}

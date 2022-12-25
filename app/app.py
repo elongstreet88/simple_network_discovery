@@ -16,8 +16,8 @@ logger = get_logger(__name__)
 
 # Fast API
 app = FastAPI(
-    title=api_title,
-    description=api_title
+    title       = api_title,
+    description = api_title
 )
     
 # Register Routes

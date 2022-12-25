@@ -1,5 +1,4 @@
-from enum import Enum
-from pydantic import BaseModel, Field, root_validator
+from pydantic import BaseModel, Field
 from logs.logs import get_logger
 
 # Setup logger using defaults

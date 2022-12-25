@@ -5,6 +5,18 @@ Simple Network Discovery
 
 # Changelog
 
+## 0.6.0 (December 25, 2022)
+
+FEATURES:
+* Code scan
+
+ENHANCEMENTS:
+* Cleanup
+
+BUG FIXES:
+
+---
+
 ## 0.5.0 (December 24, 2022)
 
 FEATURES:

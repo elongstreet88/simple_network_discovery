@@ -9,8 +9,17 @@ logger = get_logger(__name__)
 class PortScanModule:
     def check_port_open_on_device(self, device_address:str, port:int, scan_settings:PortScanSettings)->bool|PortScan:
         """
-        Tests if a port is open on a device.
+        Checks if a port is open on a device.
+
+        Args:
+            device_address (str): IP or hostname of device being scanned
+            port (int): Port being scanned
+            scan_settings (PortScanSettings): Settings used for port scan.
+
+        Returns:
+            bool|PortScan: True if port is open, False if port is closed|PortScan object with details
         """
+        
         # Result object
         result = PortScan(
             device_address          = device_address,
@@ -49,6 +58,10 @@ class PortScanModule:
                 # Log and return
                 logger.debug(f"Host [{device_address}] on port [{port}] with scan settings [{scan_settings}] is [open].")
                 return True, result
+            
+            # Protocol not supported, fail and log
+            logger.error(f"Protocol [{scan_settings.protocol}] is not supported.")
+            return False, None
  
         except Exception as e:
             # Success, but port isn't open or an error occurred.

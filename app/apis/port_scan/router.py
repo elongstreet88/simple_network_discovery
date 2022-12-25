@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Response
-from apis.port_scan.model import PortScan, PortScanProtocol, PortScanSettings
+from apis.port_scan.model import PortScan, PortScanSettings
 from apis.port_scan.module import PortScanModule
-from tools.tools import FormatJSON
 from fastapi_cache.decorator import cache
 from starlette.concurrency import run_in_threadpool
 
@@ -16,7 +15,7 @@ router = APIRouter(
 async def get_port_scan(response:Response, device_address: str, port: int, scan_settings:PortScanSettings=Depends()):
     """
     Checks if a port is open on a device.\n
-    Cache: 1 Second
+    Cache: 1 second
     """
     module = PortScanModule()
     success, results = await run_in_threadpool(module.check_port_open_on_device, device_address, port, scan_settings)

@@ -8,7 +8,14 @@ logger = get_logger(__name__)
 class PingScanModule:
     def ping_device(self, device_address:str, ping_scan_settings:PingScanSettings)->bool|PingScan:
         """
-        Tests if a device is reachable with ping.
+        Pings a device and returns the results.
+
+        Args:
+            device_address (str): IP or hostname of device being scanned
+            ping_scan_settings (PingScanSettings): Settings used for ping scan.
+
+        Returns:
+            bool|PingScan: True if ping was successful, False if ping failed|PingScan object with details
         """
 
         # Result object
@@ -45,4 +52,3 @@ class PingScanModule:
         # Log and return
         logger.info(f"Device [{device_address}] ping online status is [{result.online}].")
         return True, result
-            

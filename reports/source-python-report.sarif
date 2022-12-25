@@ -1,0 +1,86 @@
+{
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Python Source Analyzer",
+          "version": "1.0.0-scan",
+          "fullName": "Python Source Analyzer"
+        }
+      },
+      "conversion": {
+        "tool": {
+          "driver": {
+            "name": "@ShiftLeft/sast-scan"
+          }
+        },
+        "invocation": {
+          "arguments": [
+            "-r",
+            "-a",
+            "vuln",
+            "-n",
+            "3",
+            "-s",
+            "B101,B102,B105,B307,B308,B310,B322,B404,B601,B602,B603,B604,B605,B701,B702,B703",
+            "-iii",
+            "-ll",
+            "-o",
+            "/app/reports/source-python-report.json",
+            "-f",
+            "json",
+            "-x",
+            ".git,.svn,.mvn,.idea,.github,.hg,dist,obj,backup,docs,tests,test,test-packages,tmp,report,reports,node_modules,.terraform,.serverless,venv,.virtualenv,vendor,bower_components,.vscode,e2e,.pytest_cache,__pycache__,.storybook,.venv,.tox,examples,tutorials,samples,migrations,db_migrations,unittests,unittests_legacy,stubs,cypress,mock,mocks",
+            "/app"
+          ],
+          "executionSuccessful": true,
+          "commandLine": "-r -a vuln -n 3 -s B101,B102,B105,B307,B308,B310,B322,B404,B601,B602,B603,B604,B605,B701,B702,B703 -iii -ll -o /app/reports/source-python-report.json -f json -x .git,.svn,.mvn,.idea,.github,.hg,dist,obj,backup,docs,tests,test,test-packages,tmp,report,reports,node_modules,.terraform,.serverless,venv,.virtualenv,vendor,bower_components,.vscode,e2e,.pytest_cache,__pycache__,.storybook,.venv,.tox,examples,tutorials,samples,migrations,db_migrations,unittests,unittests_legacy,stubs,cypress,mock,mocks /app",
+          "endTimeUtc": "2022-12-25T02:20:39Z",
+          "workingDirectory": {
+            "uri": "file:///Users/eric/personal/git/simple_network_discovery"
+          }
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2022-12-25T02:20:39Z",
+          "workingDirectory": {
+            "uri": "file:///Users/eric/personal/git/simple_network_discovery"
+          }
+        }
+      ],
+      "properties": {
+        "metrics": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "results": [],
+      "automationDetails": {
+        "description": {
+          "text": "Static Analysis Security Test results using @ShiftLeft/sast-scan"
+        },
+        "guid": "6c43bdc1-64b0-46de-ab11-da0bbfff54b4"
+      },
+      "versionControlProvenance": [
+        {
+          "branch": "main",
+          "repositoryUri": "https://github.com/elongstreet88/simple_network_discovery",
+          "revisionId": "f88a47a2050e892463083e97cc942c364b5c3b9f"
+        }
+      ]
+    }
+  ],
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "inlineExternalProperties": [
+    {
+      "guid": "6c43bdc1-64b0-46de-ab11-da0bbfff54b4",
+      "runGuid": "029f7674-d21a-4e95-80be-787c7fee8686"
+    }
+  ]
+}

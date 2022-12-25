@@ -4,7 +4,6 @@ import os
 import typing
 from fastapi import Response
 import os
-import subprocess
 
 def deep_get(dictionary:dict, keys:str, default=None):
     """ Get value from nested dictionary without having to chain .get() calls
