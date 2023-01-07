@@ -5,6 +5,17 @@ Simple Network Discovery
 
 # Changelog
 
+## 0.7.1 (January 7, 2023)
+
+FEATURES:
+
+ENHANCEMENTS:
+
+BUG FIXES:
+* Cleanup and fixes
+
+---
+
 ## 0.7.0 (January 7, 2023)
 
 FEATURES:
