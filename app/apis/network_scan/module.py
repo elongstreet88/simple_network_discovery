@@ -1,5 +1,8 @@
+from apis.network_interface.module import NetworkInterfaceModule
 from apis.network_scan.model import NetworkScan, NetworkScanSettings
+from apis.ping_scan.model import PingScanSettings
 from apis.ping_scan.module import PingScanModule
+from apis.tcp_port_scan.model import TCPPortScanSettings
 from apis.tcp_port_scan.module import TCPPortScanModule
 from logs.logs import get_logger
 import ipaddress
@@ -9,12 +12,24 @@ import asyncio
 logger = get_logger(__name__)
 
 class NetworkScanModule:
-    async def scan_network(self, network_address:str, network_scan_settings:NetworkScanSettings)->bool|NetworkScan:
-        """_summary_
+    def __init__(self,network_scan_settings:NetworkScanSettings = NetworkScanSettings(
+                        tcp_port_scan_settings  = TCPPortScanSettings(), 
+                        ping_scan_settings      = PingScanSettings())
+                ):
+        """
+        Initialize NetworkScanModule
+
+        Args:
+            network_scan_settings (NetworkScanSettings, optional): Settings Defaults to NetworkScanSettings(tcp_port_scan_settings=TCPPortScanSettings(), ping_scan_settings=PingScanSettings()).
+        """
+        self.network_scan_settings = network_scan_settings
+
+    async def scan_network(self, network_address:str)->bool|NetworkScan:
+        """
+        Scans a network for devices and open ports.
 
         Args:
             network_address (str): Network address to scan. Ex: 192.168.0.0/24
-            network_scan_settings (NetworkScanSettings): Settings for network scan
 
         Returns:
             bool|NetworkScan: True if successful, False if not. NetworkScan object if successful, None if not.
@@ -34,31 +49,36 @@ class NetworkScanModule:
         # Get usable ips in network
         ips = list(network.hosts())
 
-        # Ping scan each ip
+        # Initialize ping scan module
         ping_scan_module = PingScanModule(
-            ping_scan_settings          = network_scan_settings.ping_scan_settings,
+            ping_scan_settings          = self.network_scan_settings.ping_scan_settings,
             max_concurrent_connections  = 64
         )
+
+        # Build ping scan tasks
         tasks = []
         for ip in ips:
             tasks.append(asyncio.create_task(ping_scan_module.ping_device(str(ip))))
 
+        # Run ping scan tasks
         for task in tasks:
             success, ping_scan_result = await task
             if success and ping_scan_result.online:
                 network_scan.ping_scan_results.append(ping_scan_result)
 
         # Get list of ports to scan
-        success, port_scan_ports = self.port_string_to_port_list(network_scan_settings.tcp_port_scan_range)
+        success, port_scan_ports = self.port_string_to_port_list(self.network_scan_settings.tcp_port_scan_range)
         if not success:
-            logger.info(f"Invalid port range: {network_scan_settings.tcp_port_scan_range}")
+            logger.info(f"Invalid port range: {self.network_scan_settings.tcp_port_scan_range}")
             return False, None
 
-        # Create asyncio tasks for port scan
+        # Initialize port scan module
         port_scan_modeule = TCPPortScanModule(
             max_concurrent_connections  = 64,
-            port_scan_settings          = network_scan_settings.tcp_port_scan_settings
+            port_scan_settings          = self.network_scan_settings.tcp_port_scan_settings
         )
+
+        # Build port scan tasks
         tasks = []
         for ping_scan_result in network_scan.ping_scan_results:
             for port in port_scan_ports:
@@ -68,7 +88,6 @@ class NetworkScanModule:
                 )))
 
         # Run port scan tasks
-        print(len(tasks))
         results = await asyncio.gather(*tasks)
 
         # Add port scan results to network scan
@@ -79,8 +98,39 @@ class NetworkScanModule:
             
         return True, network_scan
 
+    async def scan_local_primary_interface_network(self)->bool|NetworkScan:
+        """
+        Scans local network by getting the first interface and scanning the network associated with that interface.
+
+        Returns:
+            bool|NetworkScan: True if successful, False if not. NetworkScan object if successful, None if not.
+        """
+
+        # Get local interfaces
+        network_interface_module  = NetworkInterfaceModule()
+        success, local_interfaces = network_interface_module.get_local_interfaces()
+
+        if not success or len(local_interfaces) == 0:
+            logger.warning("No local interfaces found.")
+            return False, None
+
+        # Get first local interface
+        local_interface = local_interfaces[0]
+
+        # Execute network scan
+        success, results = await self.scan_network(
+            network_address         = local_interface.primary_network_cidr
+        )
+
+        if not success:
+            logger.warn("Network scan failed.")
+            return False, None
+
+        return True, results
+
     def port_string_to_port_list(self, port_string:str)->bool|list[int]:
-        """_summary_
+        """
+        Converts a port range string to a list of ports.
 
         Args:
             port_string (str): Port range to scan in string format. Ex: '1-53,80,443'
