@@ -15,7 +15,6 @@ class NetworkScanModule:
         Args:
             network_address (str): Network address to scan. Ex: 192.168.0.0/24
             network_scan_settings (NetworkScanSettings): Settings for network scan
-            port_scan_ports (list[int], optional): List of ports to scan. Defaults to DEFAULT_PORT_SCAN_PORTS.
 
         Returns:
             bool|NetworkScan: True if successful, False if not. NetworkScan object if successful, None if not.

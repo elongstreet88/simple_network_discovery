@@ -47,10 +47,3 @@ async def health():
     Return status code 200 OK if healthy.
     """
     return "OK"
-
-class Device(BaseModel):
-    q : List[int] = Query(None)
-
-@app.get("/items/")
-def read_items(device:Device=Depends()):
-    return {"q": device}

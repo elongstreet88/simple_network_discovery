@@ -1,4 +1,4 @@
-from pydantic import BaseConfig, BaseModel, Field
+from pydantic import BaseModel, Field
 from logs.logs import get_logger
 
 # Setup logger using defaults

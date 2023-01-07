@@ -3,7 +3,6 @@ from logs.logs import get_logger
 
 # Setup logger using defaults
 logger = get_logger(__name__)
-
 class Location(BaseModel):
     public_ip               : str = Field(description="Current public ip from https")
     city                    : str = Field(description="City from current public ip")

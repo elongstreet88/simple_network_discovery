@@ -11,12 +11,12 @@ router = APIRouter(
 )
 
 @router.get("/{address}/{mask}", response_model=NetworkScan, status_code=status.HTTP_200_OK)
-@cache(expire=1) # 1 Seconds
+@cache(expire=60) # 1 Minute
 async def get_network_scan(response:Response, address: str, mask:str, network_scan_settings: NetworkScanSettings=Depends()):
     """
     Scan all devices on a network.\n
     Includes ping scan and port scan.\n
-    Cache: 1 Second
+    Cache: 1 Minute
     """
 
     module = NetworkScanModule()

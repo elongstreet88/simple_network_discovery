@@ -9,10 +9,12 @@ logger = get_logger(__name__)
 class PingScanModule:
     def __init__(self, ping_scan_settings:PingScanSettings=PingScanSettings(), max_concurrent_connections:int=8):
         """
-        Initializes the PortScanModule class.
+        Initializes the PingScanModule class.
 
         Args:
-            max_coroutine_limit (int, optional): Maximum number of concurrent scans.
+            ping_scan_settings (PingScanSettings, optional): _description_. Defaults to PingScanSettings().
+            max_concurrent_connections (int, optional): _description_. Defaults to 8.
+            
         """
         self.semaphore          = Semaphore(max_concurrent_connections)
         self.ping_scan_settings = ping_scan_settings
