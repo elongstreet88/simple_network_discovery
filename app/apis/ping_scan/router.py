@@ -19,13 +19,22 @@ async def get_ping_scan(response:Response, device_address: str, ping_scan_settin
     Cache: 1 Second
     """
 
-    module = PingScanModule()
-    success, results = await run_in_threadpool(module.ping_device, device_address, ping_scan_settings)
+    # Setup module
+    module = PingScanModule(
+        ping_scan_settings = ping_scan_settings
+    )
 
+    # Execute action
+    success, results = await module.ping_device(
+        device_address = device_address
+    )
+
+    # Set failed response
     if not success:
         raise HTTPException(
             status_code = status.HTTP_400_BAD_REQUEST, 
             detail      = f"Bad request."
         )
 
+    # Return results
     return results

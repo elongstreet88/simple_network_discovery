@@ -5,6 +5,18 @@ Simple Network Discovery
 
 # Changelog
 
+## 0.7.0 (January 7, 2023)
+
+FEATURES:
+* Network scan api added
+
+ENHANCEMENTS:
+* Refactor and cleanup
+
+BUG FIXES:
+
+---
+
 ## 0.6.0 (December 25, 2022)
 
 FEATURES:

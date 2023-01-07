@@ -1,14 +1,14 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseConfig, BaseModel, Field
 from logs.logs import get_logger
 
 # Setup logger using defaults
 logger = get_logger(__name__)
 
 class PingScanSettings(BaseModel):
-    size:                       int       = Field(default=1, description="Size of packet to send")
-    timeout:                    int       = Field(default=2, description="Timeout in seconds")
-    count:                      int       = Field(default=4, description="Number of packets to send")
-    interval:                   int       = Field(default=0, description="Interval between packets in seconds")
+    ping_scan_size:        int       = Field(default=1, description="Size of packet to send", ge=1, le=65507)
+    ping_scan_timeout:     int       = Field(default=2, description="Timeout in seconds", ge=1, le=60)
+    ping_scan_count:       int       = Field(default=4, description="Number of packets to send", ge=1, le=100)
+    ping_scan_interval:    int       = Field(default=0, description="Interval between packets in seconds", ge=0, le=60)
 
 class PingScan(BaseModel):
     device_address:             str              = Field(description="IP or hostname of device being scanned")
@@ -20,4 +20,3 @@ class PingScan(BaseModel):
     packets_sent:               int              = Field(default=0, description="Number of packets sent")
     packets_received:           int              = Field(default=0, description="Number of packets received")
     packet_loss:                float            = Field(default=0, description="Percentage of packets lost")
-    ping_scan_settings:         PingScanSettings = Field(description="Settings for ping scan")

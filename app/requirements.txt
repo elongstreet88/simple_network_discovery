@@ -17,6 +17,7 @@ iniconfig==1.1.1
 packaging==22.0
 pendulum==2.1.2
 pluggy==1.0.0
+port-range==2.2.0
 pydantic==1.10.2
 pytest==7.2.0
 pytest-xdist==3.1.0

@@ -1,11 +1,15 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from pydantic import BaseModel
 from logs.logs import get_logger
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.inmemory import InMemoryBackend
 from apis.location.router import router as location_router
 from apis.network_interface.router import router as network_interface_router
-from apis.port_scan.router import router as port_scan_router
+from apis.tcp_port_scan.router import router as tcp_port_scan_router
 from apis.ping_scan.router import router as ping_scan_router
+from apis.network_scan.router import router as network_scan_router
+from fastapi import FastAPI, Query
+from typing import List
 
 # Root vars
 root_path   = "/api"
@@ -23,8 +27,9 @@ app = FastAPI(
 # Register Routes
 app.include_router(location_router,             prefix=root_path)
 app.include_router(network_interface_router,    prefix=root_path)
-app.include_router(port_scan_router,            prefix=root_path)
+app.include_router(tcp_port_scan_router,        prefix=root_path)
 app.include_router(ping_scan_router,            prefix=root_path)
+app.include_router(network_scan_router,         prefix=root_path)
 
 @app.on_event("startup")
 async def startup():
@@ -42,3 +47,10 @@ async def health():
     Return status code 200 OK if healthy.
     """
     return "OK"
+
+class Device(BaseModel):
+    q : List[int] = Query(None)
+
+@app.get("/items/")
+def read_items(device:Device=Depends()):
+    return {"q": device}

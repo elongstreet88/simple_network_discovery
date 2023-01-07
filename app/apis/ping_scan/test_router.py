@@ -26,13 +26,9 @@ def test_get_ping_up(client):
     assert data["packets_sent"]                       == 4
     assert data["packets_received"]                   == 4
     assert data["packet_loss"]                        == 0
-    assert data["ping_scan_settings"]["size"]         == 1
-    assert data["ping_scan_settings"]["timeout"]      == 2
-    assert data["ping_scan_settings"]["count"]        == 4
-    assert data["ping_scan_settings"]["interval"]     == 0
 
 def test_get_ping_up_custom_scan_settings(client):
-    response = client.get(f"{api_root_path}/1.1.1.1?size=5&timeout=1&count=1&interval=1")
+    response = client.get(f"{api_root_path}/1.1.1.1?ping_scan_size=5&ping_scan_timeout=1&ping_scan_count=1&ping_scan_interval=1")
     data = response.json()
     print(data)
 
@@ -47,10 +43,6 @@ def test_get_ping_up_custom_scan_settings(client):
     assert data["packets_sent"]                       == 1
     assert data["packets_received"]                   == 1
     assert data["packet_loss"]                        == 0
-    assert data["ping_scan_settings"]["size"]         == 5
-    assert data["ping_scan_settings"]["timeout"]      == 1
-    assert data["ping_scan_settings"]["count"]        == 1
-    assert data["ping_scan_settings"]["interval"]     == 1
 
 def test_get_ping_down(client):
     response = client.get(f"{api_root_path}/0.0.0.0")
@@ -67,7 +59,3 @@ def test_get_ping_down(client):
     assert data["packets_sent"]                       == 1
     assert data["packets_received"]                   == 0
     assert data["packet_loss"]                        == 1
-    assert data["ping_scan_settings"]["size"]         == 1
-    assert data["ping_scan_settings"]["timeout"]      == 2
-    assert data["ping_scan_settings"]["count"]        == 4
-    assert data["ping_scan_settings"]["interval"]     == 0

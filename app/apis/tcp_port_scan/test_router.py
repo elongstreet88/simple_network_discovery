@@ -9,7 +9,7 @@ def client():
         yield c
 
 # Set api root for test
-api_root_path = root_path + "/port_scan"
+api_root_path = root_path + "/tcp_port_scan"
 
 def test_get_port_scan_tcp_open(client):
     response = client.get(f"{api_root_path}/google.com/80")
@@ -22,11 +22,9 @@ def test_get_port_scan_tcp_open(client):
     assert data["open"]                             == True
     assert data["scan_duration"]                    > 0
     assert data["scan_duration"]                    <= 500
-    assert data["port_scan_settings"]["timeout"]    == 500
-    assert data["port_scan_settings"]["protocol"]   == "tcp"
 
 def test_get_port_scan_tcp_open_custom_scan_settings(client):
-    response = client.get(f"{api_root_path}/google.com/80?timeout=123&protocol=tcp")
+    response = client.get(f"{api_root_path}/google.com/80?tcp_port_scan_timeout=123")
     data = response.json()
 
     # Compare first ip from main call to specific ip network call
@@ -36,8 +34,6 @@ def test_get_port_scan_tcp_open_custom_scan_settings(client):
     assert data["open"]                             == True
     assert data["scan_duration"]                    > 0
     assert data["scan_duration"]                    <= 123
-    assert data["port_scan_settings"]["timeout"]    == 123
-    assert data["port_scan_settings"]["protocol"]   == "tcp"
 
 def test_get_port_scan_tcp_closed(client):
     response = client.get(f"{api_root_path}/google.com/81")
@@ -50,5 +46,3 @@ def test_get_port_scan_tcp_closed(client):
     assert data["open"]                             == False
     assert data["scan_duration"]                    > 0
     assert data["scan_duration"]                    <= 500
-    assert data["port_scan_settings"]["timeout"]    == 500
-    assert data["port_scan_settings"]["protocol"]   == "tcp"
